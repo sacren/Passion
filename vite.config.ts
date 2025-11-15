@@ -24,4 +24,10 @@ export default defineConfig({
             formVariants: true,
         }),
     ],
+    server: {
+        cors: true,
+        hmr: {
+            host: 'laravel.local',
+        },
+    }
 });
