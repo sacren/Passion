@@ -34,6 +34,67 @@ onMounted(async () => {
     ]
   }
 })
+
+type Pizzeria = {
+    name: string
+    price: number
+}
+
+type Order = {
+    id: number
+    pizza: Pizzeria
+    status?: string
+}
+
+const menu: Pizzeria[] = [
+    { name: 'Margherita', price: 12.99 },
+    { name: 'Pepperoni', price: 14.99 },
+    { name: 'Vegetarian', price: 13.99 },
+    { name: 'Hawaiian', price: 15.99 },
+]
+
+let cashInRegister: number = 100
+let nextOrderId: number = 1
+let orderQueue: Order[] = []
+
+function addNewPizza(pizzaObj: Pizzeria) {
+    menu.push(pizzaObj)
+}
+
+function placeOrder(pizzaName: string) {
+    const selectedPizza = menu.find((pizza) => pizza.name === pizzaName)
+
+    if (!selectedPizza) {
+        throw new Error(`Pizza ${pizzaName} not found in menu`)
+    }
+
+    cashInRegister += selectedPizza.price
+    const newOrder: Order = { id: nextOrderId++, pizza: selectedPizza, }
+    orderQueue.push(newOrder)
+    return newOrder
+}
+
+function completeOrder(orderId: number) {
+    const order = orderQueue.find((order) => order.id === orderId)
+
+    if (!order) {
+        throw new Error(`Order ${orderId} not found`)
+    }
+
+    order.status = 'completed'
+    return order
+}
+
+addNewPizza({ name: 'Chicken Bacon Ranch', price: 14.99 })
+addNewPizza({ name: 'BBQ Chicken', price: 12.99 })
+addNewPizza({ name: 'Spicy Italian', price: 11.99 })
+
+placeOrder('Margherita')
+completeOrder(1)
+
+console.log(menu)
+console.log(cashInRegister)
+console.log(orderQueue)
 </script>
 
 <template>
