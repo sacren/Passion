@@ -36,6 +36,7 @@ onMounted(async () => {
 })
 
 type Pizzeria = {
+    id: number
     name: string
     price: number
 }
@@ -48,11 +49,13 @@ type Order = {
     status: Status
 }
 
+type Identifier = number | string
+
 const menu: Pizzeria[] = [
-    { name: 'Margherita', price: 12.99 },
-    { name: 'Pepperoni', price: 14.99 },
-    { name: 'Vegetarian', price: 13.99 },
-    { name: 'Hawaiian', price: 15.99 },
+    { id: 1, name: 'Margherita', price: 12.99 },
+    { id: 2, name: 'Pepperoni', price: 14.99 },
+    { id: 3, name: 'Vegetarian', price: 13.99 },
+    { id: 4, name: 'Hawaiian', price: 15.99 },
 ]
 
 let cashInRegister: number = 100
@@ -63,11 +66,21 @@ function addNewPizza(pizzaObj: Pizzeria) {
     menu.push(pizzaObj)
 }
 
-function placeOrder(pizzaName: string) {
-    const selectedPizza = menu.find((pizza) => pizza.name === pizzaName)
+function getPizzaDetail(identifier: Identifier) {
+    if (typeof identifier === 'number') {
+        return menu.find((pizza) => pizza.id === identifier)
+    } else if (typeof identifier === 'string') {
+        return menu.find((pizza) => pizza.name.toLowerCase() === identifier.toLowerCase())
+    } else {
+        throw new TypeError('Parameter `identifier` must be a number or a string')
+    }
+}
+
+function placeOrder(pizzeria: Identifier) {
+    const selectedPizza = menu.find((pizza) => getPizzaDetail(pizzeria) === pizza)
 
     if (!selectedPizza) {
-        throw new Error(`Pizza ${pizzaName} not found in menu`)
+        throw new Error('This pizza is not found in the menu')
     }
 
     cashInRegister += selectedPizza.price
@@ -87,9 +100,9 @@ function completeOrder(orderId: number) {
     return order
 }
 
-addNewPizza({ name: 'Chicken Bacon Ranch', price: 14.99 })
-addNewPizza({ name: 'BBQ Chicken', price: 12.99 })
-addNewPizza({ name: 'Spicy Italian', price: 11.99 })
+addNewPizza({ id: 5, name: 'Chicken Bacon Ranch', price: 14.99 })
+addNewPizza({ id: 6, name: 'BBQ Chicken', price: 12.99 })
+addNewPizza({ id: 7, name: 'Spicy Italian', price: 11.99 })
 
 placeOrder('Margherita')
 completeOrder(1)
