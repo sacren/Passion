@@ -51,16 +51,17 @@ type Order = {
     status: Status
 }
 
-const menu: Pizzeria[] = [
-    { id: 1, name: 'Margherita', price: 12.99 },
-    { id: 2, name: 'Pepperoni', price: 14.99 },
-    { id: 3, name: 'Vegetarian', price: 13.99 },
-    { id: 4, name: 'Hawaiian', price: 15.99 },
-]
-
 let cashInRegister: number = 100
 let nextOrderId: number = 1
+let nextPizzaId: number = 1
 let orderQueue: Order[] = []
+
+const menu: Pizzeria[] = [
+    { id: nextPizzaId++, name: 'Margherita', price: 12.99 },
+    { id: nextPizzaId++, name: 'Pepperoni', price: 14.99 },
+    { id: nextPizzaId++, name: 'Vegetarian', price: 13.99 },
+    { id: nextPizzaId++, name: 'Hawaiian', price: 15.99 },
+]
 
 function addNewPizza(pizzaObj: Pizzeria): void {
     menu.push(pizzaObj)
@@ -100,9 +101,9 @@ function completeOrder(orderId: number): Order {
     return order
 }
 
-addNewPizza({ id: 5, name: 'Chicken Bacon Ranch', price: 14.99 })
-addNewPizza({ id: 6, name: 'BBQ Chicken', price: 12.99 })
-addNewPizza({ id: 7, name: 'Spicy Italian', price: 11.99 })
+addNewPizza({ id: nextPizzaId++, name: 'Chicken Bacon Ranch', price: 14.99 })
+addNewPizza({ id: nextPizzaId++, name: 'BBQ Chicken', price: 12.99 })
+addNewPizza({ id: nextPizzaId++, name: 'Spicy Italian', price: 11.99 })
 
 placeOrder('Margherita')
 completeOrder(1)
