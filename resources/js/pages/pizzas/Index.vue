@@ -35,21 +35,21 @@ onMounted(async () => {
   }
 })
 
+type Status = 'ordered' | 'completed'
+type Identifier = number | string
+type PizzaDetail = Pizzeria | undefined
+
 type Pizzeria = {
     id: number
     name: string
     price: number
 }
 
-type Status = 'ordered' | 'completed'
-
 type Order = {
     id: number
     pizza: Pizzeria
     status: Status
 }
-
-type Identifier = number | string
 
 const menu: Pizzeria[] = [
     { id: 1, name: 'Margherita', price: 12.99 },
@@ -62,11 +62,11 @@ let cashInRegister: number = 100
 let nextOrderId: number = 1
 let orderQueue: Order[] = []
 
-function addNewPizza(pizzaObj: Pizzeria) {
+function addNewPizza(pizzaObj: Pizzeria): void {
     menu.push(pizzaObj)
 }
 
-function getPizzaDetail(identifier: Identifier) {
+function getPizzaDetail(identifier: Identifier): PizzaDetail {
     if (typeof identifier === 'number') {
         return menu.find((pizza) => pizza.id === identifier)
     } else if (typeof identifier === 'string') {
@@ -76,7 +76,7 @@ function getPizzaDetail(identifier: Identifier) {
     }
 }
 
-function placeOrder(pizzeria: Identifier) {
+function placeOrder(pizzeria: Identifier): Order {
     const selectedPizza = menu.find((pizza) => getPizzaDetail(pizzeria) === pizza)
 
     if (!selectedPizza) {
@@ -89,7 +89,7 @@ function placeOrder(pizzeria: Identifier) {
     return newOrder
 }
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number): Order {
     const order = orderQueue.find((order) => order.id === orderId)
 
     if (!order) {
