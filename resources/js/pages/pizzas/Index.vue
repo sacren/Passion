@@ -37,9 +37,9 @@ onMounted(async () => {
 
 type Status = 'ordered' | 'completed'
 type Identifier = number | string
-type PizzaDetail = Pizzeria | undefined
+type PizzaDetail = PizzaOnMenu | undefined
 
-type Pizzeria = {
+type PizzaOnMenu = {
     id: number
     name: string
     price: number
@@ -47,7 +47,7 @@ type Pizzeria = {
 
 type Order = {
     id: number
-    pizza: Pizzeria
+    pizza: PizzaOnMenu
     status: Status
 }
 
@@ -56,15 +56,19 @@ let nextOrderId: number = 1
 let nextPizzaId: number = 1
 let orderQueue: Order[] = []
 
-const menu: Pizzeria[] = [
+const menu: PizzaOnMenu[] = [
     { id: nextPizzaId++, name: 'Margherita', price: 12.99 },
     { id: nextPizzaId++, name: 'Pepperoni', price: 14.99 },
     { id: nextPizzaId++, name: 'Vegetarian', price: 13.99 },
     { id: nextPizzaId++, name: 'Hawaiian', price: 15.99 },
 ]
 
-function addNewPizza(pizzaObj: Pizzeria): void {
-    menu.push(pizzaObj)
+function addNewPizza(pizzaObj: Omit<PizzaOnMenu, 'id'>): void {
+    const newPizza: PizzaOnMenu = {
+        id: nextPizzaId++,
+        ...pizzaObj,
+    }
+    menu.push(newPizza)
 }
 
 function getPizzaDetail(identifier: Identifier): PizzaDetail {
@@ -101,9 +105,9 @@ function completeOrder(orderId: number): Order {
     return order
 }
 
-addNewPizza({ id: nextPizzaId++, name: 'Chicken Bacon Ranch', price: 14.99 })
-addNewPizza({ id: nextPizzaId++, name: 'BBQ Chicken', price: 12.99 })
-addNewPizza({ id: nextPizzaId++, name: 'Spicy Italian', price: 11.99 })
+addNewPizza({ name: 'Chicken Bacon Ranch', price: 18.99 })
+addNewPizza({ name: 'BBQ Chicken', price: 17.99 })
+addNewPizza({ name: 'Spicy Italian', price: 16.99 })
 
 placeOrder('Margherita')
 completeOrder(1)
