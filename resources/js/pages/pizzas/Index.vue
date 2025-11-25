@@ -71,6 +71,11 @@ function addNewPizza(pizzaObj: Omit<PizzaOnMenu, 'id'>): void {
     menu.push(newPizza)
 }
 
+function addToArray<T>(array: T[], item: T): T[] {
+    array.push(item)
+    return array
+}
+
 function getPizzaDetail(identifier: Identifier): PizzaDetail {
     if (typeof identifier === 'number') {
         return menu.find((pizza) => pizza.id === identifier)
@@ -108,6 +113,9 @@ function completeOrder(orderId: number): Order {
 addNewPizza({ name: 'Chicken Bacon Ranch', price: 18.99 })
 addNewPizza({ name: 'BBQ Chicken', price: 17.99 })
 addNewPizza({ name: 'Spicy Italian', price: 16.99 })
+
+addToArray<PizzaOnMenu>(menu, { id: nextPizzaId++, name: 'Pineapple', price: 20.99 })
+addToArray<Order>(orderQueue, { id: nextOrderId++, pizza: menu[3], status: 'completed' })
 
 placeOrder('Margherita')
 completeOrder(1)
