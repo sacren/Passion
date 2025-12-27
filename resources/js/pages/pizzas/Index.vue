@@ -1,4 +1,68 @@
 <script setup lang="ts">
+interface Pizza {
+    id: number;
+    name: string;
+    price: number;
+}
+
+interface Order {
+    id: number;
+    pizza: Pizza;
+    status: string;
+}
+
+let nextMenuId: number = 1;
+let nextOrderId: number = 1;
+let cashRegister: number = 100;
+
+const menu: Pizza[] = [
+    { id: nextMenuId++, name: 'Margherita', price: 10.99 },
+    { id: nextMenuId++, name: 'Peperoni', price: 12.99 },
+    { id: nextMenuId++, name: 'Hawaiian', price: 13.99 },
+    { id: nextMenuId++, name: 'Meat Lovers', price: 14.99 },
+    { id: nextMenuId++, name: 'Vegetarian', price: 15.99 },
+];
+
+const orderQueue: Order[] = [];
+
+function addNewPizza(pizzaObj: Pizza) {
+    menu.push(pizzaObj);
+}
+
+function placeOrder(pizzaName: string) {
+    const selectedPizza: Pizza | undefined = menu.find((pizza) => pizza.name === pizzaName);
+
+    if (!selectedPizza) {
+        throw new Error('Pizza not found');
+    }
+
+    cashRegister += selectedPizza.price;
+    const newOrder: Order = { id: nextOrderId++, pizza: selectedPizza, status: 'ordered' };
+    orderQueue.push(newOrder);
+    return newOrder;
+}
+
+function completeOrder(orderId: number) {
+    const order: Order | undefined = orderQueue.find((order) => order.id === orderId);
+
+    if (!order) {
+        throw new Error('Order not found');
+    }
+
+    order.status = 'completed';
+    return order;
+}
+
+addNewPizza({ id: nextMenuId++, name: 'Sausage', price: 16.99 });
+addNewPizza({ id: nextMenuId++, name: 'Salami', price: 17.99 });
+addNewPizza({ id: nextMenuId++, name: 'Supreme', price: 29.99 });
+
+placeOrder('Meat Lovers');
+completeOrder(1);
+
+console.log('Menu:', menu);
+console.log('Cash Register:', cashRegister);
+console.log('Order Queue:', orderQueue);
 </script>
 
 <template>
