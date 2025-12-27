@@ -8,7 +8,7 @@ interface Pizza {
 interface Order {
     id: number;
     pizza: Pizza;
-    status: string;
+    status: 'ordered' | 'completed';
 }
 
 let nextMenuId: number = 1;
