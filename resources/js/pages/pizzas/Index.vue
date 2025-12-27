@@ -25,11 +25,11 @@ const menu: Pizza[] = [
 
 const orderQueue: Order[] = [];
 
-function addNewPizza(pizzaObj: Pizza) {
+function addNewPizza(pizzaObj: Pizza): void {
     menu.push(pizzaObj);
 }
 
-function placeOrder(pizzaName: string) {
+function placeOrder(pizzaName: string): Order {
     const selectedPizza: Pizza | undefined = menu.find((pizza) => pizza.name === pizzaName);
 
     if (!selectedPizza) {
@@ -42,7 +42,7 @@ function placeOrder(pizzaName: string) {
     return newOrder;
 }
 
-function completeOrder(orderId: number) {
+function completeOrder(orderId: number): Order {
     const order: Order | undefined = orderQueue.find((order) => order.id === orderId);
 
     if (!order) {
@@ -53,7 +53,7 @@ function completeOrder(orderId: number) {
     return order;
 }
 
-function getPizzaDetail(identifier: number | string) {
+function getPizzaDetail(identifier: number | string): Pizza {
     if (typeof identifier === 'number') {
         const pizza: Pizza | undefined = menu.find((pizza) => {
             return pizza.id === identifier
