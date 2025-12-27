@@ -53,12 +53,35 @@ function completeOrder(orderId: number) {
     return order;
 }
 
+function getPizzaDetail(identifier: number | string) {
+    if (typeof identifier === 'number') {
+        const pizza: Pizza | undefined = menu.find((pizza) => {
+            return pizza.id === identifier
+        });
+        if (!pizza) {
+            throw new Error('Pizza not on menu');
+        }
+        return pizza;
+    } else if (typeof identifier === 'string') {
+        const pizza: Pizza | undefined = menu.find((pizza) => {
+            return pizza.name.toLowerCase() === identifier.toLowerCase()
+        });
+        if (!pizza) {
+            throw new Error('Pizza not on menu');
+        }
+        return pizza;
+    } else {
+        throw new Error('Invalid identifier');
+    }
+}
+
 addNewPizza({ id: nextMenuId++, name: 'Sausage', price: 16.99 });
 addNewPizza({ id: nextMenuId++, name: 'Salami', price: 17.99 });
 addNewPizza({ id: nextMenuId++, name: 'Supreme', price: 29.99 });
 
 placeOrder('Meat Lovers');
 completeOrder(1);
+getPizzaDetail(1);
 
 console.log('Menu:', menu);
 console.log('Cash Register:', cashRegister);
