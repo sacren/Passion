@@ -26,8 +26,9 @@ const menu: Pizza[] = [
 const orderQueue: Order[] = [];
 
 function addNewPizza(pizzaObj: Pizza): void {
-    pizzaObj.id = nextMenuId++;
-    menu.push(pizzaObj);
+    const name: string = pizzaObj.name;
+    const price: number = pizzaObj.price;
+    menu.push({ id: nextMenuId++, name, price });
 }
 
 function placeOrder(pizzaName: string): Order {
