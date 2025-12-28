@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Pizza {
-    id: number;
+    id?: number;
     name: string;
     price: number;
 }
@@ -26,6 +26,7 @@ const menu: Pizza[] = [
 const orderQueue: Order[] = [];
 
 function addNewPizza(pizzaObj: Pizza): void {
+    pizzaObj.id = nextMenuId++;
     menu.push(pizzaObj);
 }
 
@@ -75,9 +76,9 @@ function getPizzaDetail(identifier: number | string): Pizza {
     }
 }
 
-addNewPizza({ id: nextMenuId++, name: 'Sausage', price: 16.99 });
-addNewPizza({ id: nextMenuId++, name: 'Salami', price: 17.99 });
-addNewPizza({ id: nextMenuId++, name: 'Supreme', price: 29.99 });
+addNewPizza({ name: 'Sausage', price: 16.99 });
+addNewPizza({ name: 'Salami', price: 17.99 });
+addNewPizza({ name: 'Supreme', price: 29.99 });
 
 placeOrder('Meat Lovers');
 completeOrder(1);
