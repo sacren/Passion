@@ -1,6 +1,6 @@
 <script setup lang="ts">
 interface Pizza {
-    id?: number;
+    id: number;
     name: string;
     price: number;
 }
@@ -25,7 +25,7 @@ const menu: Pizza[] = [
 
 const orderQueue: Order[] = [];
 
-function addNewPizza(pizzaObj: Pizza): void {
+function addNewPizza(pizzaObj: Omit<Pizza, 'id'>): void {
     menu.push({
         id: nextMenuId++,
         ...pizzaObj
