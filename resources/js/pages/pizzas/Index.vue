@@ -86,7 +86,7 @@ addNewPizza({ name: 'Sausage', price: 16.99 });
 addNewPizza({ name: 'Salami', price: 17.99 });
 addNewPizza({ name: 'Supreme', price: 29.99 });
 
-addToArray(menu, {
+addToArray<Pizza>(menu, {
     id: nextMenuId++,
     name: 'Seafood',
     price: 34.99
@@ -96,10 +96,10 @@ placeOrder('Meat Lovers');
 completeOrder(1);
 getPizzaDetail(1);
 
-addToArray(orderQueue, {
+addToArray<Order>(orderQueue, {
     id: nextOrderId++,
     pizza: menu[5],
-    status: 'baking'
+    status: 'ordered'
 });
 
 console.log('Menu:', menu);
