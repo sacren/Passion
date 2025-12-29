@@ -78,13 +78,29 @@ function getPizzaDetail(identifier: number | string): Pizza {
     }
 }
 
+function addToArray<T>(array: T[], item: T): void {
+    array.push(item);
+}
+
 addNewPizza({ name: 'Sausage', price: 16.99 });
 addNewPizza({ name: 'Salami', price: 17.99 });
 addNewPizza({ name: 'Supreme', price: 29.99 });
 
+addToArray(menu, {
+    id: nextMenuId++,
+    name: 'Seafood',
+    price: 34.99
+});
+
 placeOrder('Meat Lovers');
 completeOrder(1);
 getPizzaDetail(1);
+
+addToArray(orderQueue, {
+    id: nextOrderId++,
+    pizza: menu[5],
+    status: 'baking'
+});
 
 console.log('Menu:', menu);
 console.log('Cash Register:', cashRegister);
